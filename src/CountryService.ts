@@ -8,10 +8,10 @@ import {
   Region,
   Subregion,
 } from './types'
-import Fuse from 'fuse.js'
+import Fuse, { IFuseOptions } from 'fuse.js'
 
 const imageJsonUrl =
-  'https://xcarpentier.github.io/react-native-country-picker-modal/countries/'
+  'https://rohitrehan.github.io/react-native-country-picker-modal/countries/'
 
 type CountryMap = { [key in CountryCode]: Country }
 
@@ -195,13 +195,13 @@ const DEFAULT_FUSE_OPTION = {
   maxPatternLength: 32,
   minMatchCharLength: 1,
   keys: ['name', 'cca2', 'callingCode'],
-}
+} as IFuseOptions<Country>
 let fuse: Fuse<Country>
 export const search = (
   filter: string = '',
-  data: Country[] = [],
-  options: Fuse.FuseOptions<Country> = DEFAULT_FUSE_OPTION,
-) => {
+  data: Country[] = [] as Country[],
+  options: IFuseOptions<Country> = DEFAULT_FUSE_OPTION,
+): Country[] => {
   if (data.length === 0) {
     return []
   }
@@ -210,7 +210,10 @@ export const search = (
   }
   if (filter && filter !== '') {
     const result = fuse.search(filter)
-    return result
+    return result.reduce((acc, { item }) => {
+      acc.push(item)
+      return acc
+    }, [] as Country[])
   } else {
     return data
   }
