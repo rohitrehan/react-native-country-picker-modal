@@ -1,6 +1,6 @@
 {
   "name": "@rohitrehan/react-native-country-picker-modal",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "react-native country picker",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -12,7 +12,7 @@
     "start": "npm run config:dev && expo start",
     "start:web": "npm run config:dev && expo start -w --dev",
     "tsc": "tsc --noEmit",
-    "build": "rimraf lib && npx tsc && mkdirp lib && cpx lib/src/* lib && rimraf lib/src && cpx \"src/assets/**\" lib/assets && npm run minify",
+    "build": "rimraf lib && npx tsc && mkdirp lib && cpx \"src/assets/**\" lib/assets && npm run minify",
     "minify": "npm run minify:emoji",
     "minify:emoji": "node ./scripts/minify.js ./lib/assets/data/countries-emoji.json",
     "config:dev": "json -I -f package.json -e 'this.main=\"node_modules/expo/AppEntry.js\"'",
