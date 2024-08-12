@@ -44,6 +44,7 @@ export const loadDataAsync = (
           break
         default:
           if (!data.emojiCountries) {
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
             data.emojiCountries = require('../assets/data/countries-emoji.json')
             resolve(data.emojiCountries!)
           } else {

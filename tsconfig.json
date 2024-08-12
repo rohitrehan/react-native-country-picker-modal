@@ -1,6 +1,10 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
+    "outDir": "./lib",
+    "noEmit": false,
+    "declaration": true,
+    "strict": true,
+    "removeComments": true
   }
 }
