@@ -11,7 +11,7 @@ import {
 import Fuse, { IFuseOptions } from 'fuse.js'
 
 const imageJsonUrl =
-  'https://rohitrehan.github.io/react-native-country-picker-modal/countries/'
+  'https://xcarpentier.github.io/react-native-country-picker-modal/countries/'
 
 type CountryMap = { [key in CountryCode]: Country }
 
@@ -44,7 +44,7 @@ export const loadDataAsync = (
           break
         default:
           if (!data.emojiCountries) {
-            data.emojiCountries = require('./assets/data/countries-emoji.json')
+            data.emojiCountries = require('../assets/data/countries-emoji.json')
             resolve(data.emojiCountries!)
           } else {
             resolve(data.emojiCountries)

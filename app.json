@@ -1,21 +1,27 @@
 {
   "expo": {
-    "name": "country-picker-example",
-    "description": "Expo Country Picker Example",
-    "slug": "country-picker-example",
-    "privacy": "public",
-    "platforms": ["ios", "android", "web"],
+    "name": "react-native-country-picker-modal",
+    "slug": "react-native-country-picker-modal",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/icon.png",
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "light",
     "splash": {
-      "image": "./src/assets/images/splash.png"
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": true
     },
-    "androidStatusBar": {
-      "backgroundColor": "#000000"
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png"
     }
   }
 }
