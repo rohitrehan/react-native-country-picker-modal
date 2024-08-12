@@ -92,8 +92,3 @@ export const Flag = ({
       )}
     </View>
   ) : null
-
-Flag.defaultProps = {
-  withEmoji: true,
-  withFlagButton: true,
-}

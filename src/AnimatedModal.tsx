@@ -46,7 +46,3 @@ export const AnimatedModal = ({ children, visible }: Props) => {
     </Animated.View>
   )
 }
-
-AnimatedModal.defaultProps = {
-  visible: false,
-}
