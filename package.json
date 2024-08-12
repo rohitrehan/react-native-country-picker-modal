@@ -1,23 +1,97 @@
 {
-  "name": "react-native-country-picker-modal",
+  "name": "@rohitrehan/react-native-country-picker-modal",
   "version": "1.0.0",
-  "main": "expo/AppEntry.js",
+  "description": "react-native country picker",
+  "main": "node_modules/expo/AppEntry.js",
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rohitrehan/react-native-country-picker-modal.git"
+  },
   "scripts": {
-    "start": "expo start",
+    "start": "npm run config:dev && expo start --reset-cache",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
-  },
-  "dependencies": {
-    "expo": "~51.0.26",
-    "expo-status-bar": "~1.12.1",
-    "react": "18.2.0",
-    "react-native": "0.74.5"
+    "web": "expo start --web",
+    "start:web": "npm run config:dev && expo start -w --dev",
+    "tsc": "tsc --noEmit",
+    "build": "rimraf lib && npx tsc && mkdirp lib && cpx \"assets/**\" lib/assets && npm run minify",
+    "minify": "npm run minify:emoji",
+    "minify:emoji": "node ./scripts/minify.js ./assets/data/countries-emoji.json",
+    "config:dev": "node ./scripts/update-package.js \"node_modules/expo/AppEntry.js\"",
+    "config:npm": "node ./scripts/update-package.js \"lib/index.js\"",
+    "lint": "eslint .",
+    "test": "cross-env TZ=Europe/Paris jest",
+    "data:image": "rimraf ./data/countries.json && ./scripts/transform-world-countries.js > ./data/countries.json",
+    "data:emoji": "rimraf ./data/countries-emoji.json && ./scripts/transform-world-countries.js --emoji > ./data/countries-emoji.json",
+    "data:cca2": "rimraf ./data/cca2.json && ./scripts/transform-world-countries.js --cca2 > ./data/cca2.json",
+    "data:regions": "rimraf ./data/cca2.json && ./scripts/transform-world-countries.js --regions > ./data/regions.json",
+    "data:subregions": "rimraf ./data/cca2.json && ./scripts/transform-world-countries.js --subregions > ./data/subregions.json",
+    "cleaning": "rimraf node_modules && rimraf package-lock.json && npm install && watchman watch-del-all && rimraf  $TMPDIR/react-*",
+    "verify": "npm run lint && npm run build && npm run test",
+    "prepublishOnly": "npm run verify && npm run config:npm",
+    "postpublish": "npm run config:dev",
+    "deploy": "gh-pages -d web-build",
+    "predeploy": "npm run verify && expo build:web && mkdir web-build/countries && cp-cli ./data/countries.json web-build/countries/index.json",
+    "temp": "tsc"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
-    "typescript": "^5.1.3"
+    "expo": "~51.0.26",
+    "expo-status-bar": "~1.12.1",
+    "husky": "^9.1.4",
+    "react": "18.2.0",
+    "react-native": "0.74.5",
+    "typescript": "~5.3.3",
+    "world-countries": "^5.0.0"
   },
-  "private": true
+  "keywords": [
+    "react-native",
+    "components",
+    "country-picker",
+    "country",
+    "flag"
+  ],
+  "author": "Rohit Rehan <rohitrehan@gmail.com> (https://rohitrehan.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rohitrehan/react-native-country-picker-modal/issues"
+  },
+  "homepage": "http://rohitrehan.github.io/react-native-country-picker-modal",
+  "jest": {
+    "preset": "react-native",
+    "testEnvironment": "jsdom",
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "ts",
+      "tsx"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+    },
+    "testMatch": [
+      "**/*.test.ts?(x)"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example-expo",
+      "<rootDir>/example-slack-message"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run tsc"
+    }
+  },
+  "resolutions": {
+    "mem": "^4.0.0"
+  },
+  "dependencies": {
+    "@callstack/react-theme-provider": "^3.0.9",
+    "fuse.js": "^7.0.0",
+    "node-emoji": "^2.1.3",
+    "react-async-hook": "^4.0.0"
+  }
 }
