@@ -31,8 +31,8 @@
     "verify": "npm run lint && npm run build && npm run test",
     "prepublishOnly": "npm run verify && npm run config:npm",
     "postpublish": "npm run config:dev",
-    "deploy": "gh-pages -d web-build",
-    "predeploy": "npm run verify && mkdirp web-build && mkdirp web-build/countries && cpx ./data/countries.json web-build/countries/index.json",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run verify && rimraf dist && mkdirp dist && npx expo export -p web && mkdirp dist/countries && cpx ./data/countries.json dist/countries/index.json",
     "temp": "jest --clearCache"
   },
   "devDependencies": {
