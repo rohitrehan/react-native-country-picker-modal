@@ -61,7 +61,8 @@ export const getEmojiFlagAsync = async (countryCode: CountryCode = 'FR') => {
   if (!countries) {
     throw new Error('Unable to find emoji because emojiCountries is undefined')
   }
-  return countries[countryCode].flag
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return countries[countryCode].name['common']
 }
 
 export const getImageFlagAsync = async (countryCode: CountryCode = 'FR') => {

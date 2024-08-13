@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native'
 import { Row } from './src/Row'
-import { Country, CountryCode, CountryModalProvider, DARK_THEME } from '.'
+import { Country, CountryCode, CountryModalProvider, DARK_THEME } from './src'
 import { CountryPicker } from './src/CountryPicker'
 
 interface OptionProps {
@@ -37,9 +37,9 @@ export default function App() {
   const [withEmoji, setWithEmoji] = useState<boolean>(true)
   const [withFilter, setWithFilter] = useState<boolean>(true)
   const [withAlphaFilter, setWithAlphaFilter] = useState<boolean>(false)
-  const [withCallingCode, setWithCallingCode] = useState<boolean>(false)
+  const [withCallingCode, setWithCallingCode] = useState<boolean>(true)
   const [withCurrency, setWithCurrency] = useState<boolean>(false)
-  const [withModal, setWithModal] = useState<boolean>(false)
+  const [withModal, setWithModal] = useState<boolean>(true)
   const [visible, setVisible] = useState<boolean>(false)
   const [dark, setDark] = useState<boolean>(false)
   const [allowFontScaling, setFontScaling] = useState<boolean>(true)
@@ -128,7 +128,7 @@ export default function App() {
             onValueChange={setWithFlagButton}
           />
           <CountryPicker
-            // theme={dark ? DARK_THEME : {}}
+            theme={dark ? DARK_THEME : {}}
             {...{
               allowFontScaling,
               countryCode,

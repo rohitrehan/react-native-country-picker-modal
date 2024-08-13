@@ -84,6 +84,7 @@ const Letter = ({ letter, scrollTo }: LetterProps) => {
 interface CountryItemProps {
   country: Country
   withFlag?: boolean
+  withFlagButton?: boolean
   withEmoji?: boolean
   withCallingCode?: boolean
   withCurrency?: boolean
@@ -95,6 +96,7 @@ const CountryItem = (props: CountryItemProps) => {
     country,
     onSelect,
     withFlag,
+    withFlagButton,
     withEmoji,
     withCallingCode,
     withCurrency,
@@ -123,7 +125,12 @@ const CountryItem = (props: CountryItemProps) => {
       <View style={[styles.itemCountry, { height: itemHeight }]}>
         {withFlag && (
           <Flag
-            {...{ withEmoji, countryCode: country.cca2, flagSize: flagSize! }}
+            {...{
+              withEmoji,
+              withFlagButton,
+              countryCode: country.cca2,
+              flagSize: flagSize!,
+            }}
           />
         )}
         <View style={styles.itemCountryName}>
@@ -149,6 +156,7 @@ interface CountryListProps {
   filter?: string
   filterFocus?: boolean
   withFlag?: boolean
+  withFlagButton?: boolean
   withEmoji?: boolean
   withAlphaFilter?: boolean
   withCallingCode?: boolean
@@ -172,6 +180,7 @@ export const CountryList = (props: CountryListProps) => {
     withAlphaFilter,
     withEmoji,
     withFlag,
+    withFlagButton,
     withCallingCode,
     withCurrency,
     onSelect,
@@ -225,6 +234,7 @@ export const CountryList = (props: CountryListProps) => {
         renderItem={renderItem({
           withEmoji,
           withFlag,
+          withFlagButton,
           withCallingCode,
           withCurrency,
           onSelect,

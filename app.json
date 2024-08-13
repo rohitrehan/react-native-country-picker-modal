@@ -14,14 +14,16 @@
     "ios": {
       "supportsTablet": true
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
-    }
+    "plugins": [
+      [
+        "expo-asset",
+        {
+          "assets": [
+            "./assets/images/close.android.png",
+            "./assets/images/close.ios.png"
+          ]
+        }
+      ]
+    ]
   }
 }
