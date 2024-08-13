@@ -12,6 +12,8 @@ import {
   ViewStyle,
 } from 'react-native'
 import { useTheme } from './CountryTheme'
+import closeImage from '../assets/images/close.android.png'
+import closeImageIOS from '../assets/images/close.ios.png'
 
 const styles = StyleSheet.create({
   container: {
@@ -35,14 +37,16 @@ interface CloseButtonProps {
 }
 
 const CloseButtonAndroid: React.FC<CloseButtonProps> = (props) => {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  let closeImage: ImageSourcePropType = require('../assets/images/close.android.png')
-
-  if (props.image) {
-    closeImage = props.image
-  }
   const { onBackgroundTextColor } = useTheme()
+  // const [assets, error] = useAssets([
+  //   // eslint-disable-next-line @typescript-eslint/no-require-imports
+  //   require('../assets/images/close.android.png'),
+  // ])
+  // const defaultImage: ImageSourcePropType | undefined = assets
+  //   ? { uri: assets[0].uri }
+  //   : undefined
   return (
+    // !error && (
     <View style={[styles.container, props.style]}>
       <TouchableNativeFeedback
         background={
@@ -54,7 +58,7 @@ const CloseButtonAndroid: React.FC<CloseButtonProps> = (props) => {
       >
         <View>
           <Image
-            source={closeImage}
+            source={props.image ?? closeImage}
             style={[
               styles.imageStyle,
               props.imageStyle,
@@ -65,21 +69,23 @@ const CloseButtonAndroid: React.FC<CloseButtonProps> = (props) => {
       </TouchableNativeFeedback>
     </View>
   )
+  // )
 }
 
 const CloseButtonIOS: React.FC<CloseButtonProps> = (props) => {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  let closeImage: any = require('../assets/images/close.ios.png')
-
-  if (props.image) {
-    closeImage = props.image
-  }
   const { onBackgroundTextColor } = useTheme()
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  // const [assets, error] = useAssets([require('../assets/images/close.ios.png')])
+  // const defaultImage: ImageSourcePropType | undefined = assets
+  //   ? { uri: assets[0].uri }
+  //   : undefined
+
   return (
+    // !error && (
     <View style={[styles.container, props.style]}>
       <TouchableOpacity onPress={props.onPress}>
         <Image
-          source={closeImage}
+          source={props.image ?? closeImageIOS}
           style={[
             styles.imageStyle,
             props.imageStyle,
@@ -89,6 +95,7 @@ const CloseButtonIOS: React.FC<CloseButtonProps> = (props) => {
       </TouchableOpacity>
     </View>
   )
+  // )
 }
 
 export default Platform.select({
