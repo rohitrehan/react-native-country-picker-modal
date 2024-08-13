@@ -26,7 +26,7 @@ jobs:
           VERSION=$(jq -r .version package.json)
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
           NAME=$(jq -r .name package.json)
-          echo "PACKAGE_NAME=${NAME}" >> $GITHUB_ENV
+          echo "PACKAGE_NAME=${NAME}" | tr @\/ - >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
