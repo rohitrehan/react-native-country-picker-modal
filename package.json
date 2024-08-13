@@ -33,7 +33,7 @@
     "postpublish": "npm run config:dev",
     "deploy": "gh-pages -d web-build",
     "predeploy": "npm run verify && mkdirp web-build/countries && cpx ./data/countries.json web-build/countries/index.json",
-    "temp": "tsc"
+    "temp": "jest --clearCache"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

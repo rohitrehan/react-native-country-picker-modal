@@ -56,13 +56,16 @@ export const loadDataAsync = (
   }
 )(localData)
 
-export const getEmojiFlagAsync = async (countryCode: CountryCode = 'FR') => {
+export const getEmojiFlagAsync = async (
+  countryCode: CountryCode = 'FR',
+): Promise<string> => {
   const countries = await loadDataAsync()
   if (!countries) {
     throw new Error('Unable to find emoji because emojiCountries is undefined')
   }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return countries[countryCode].name['common']
+  return typeof countries[countryCode].name === 'string'
+    ? (countries[countryCode].name as string)
+    : (countries[countryCode].name as TranslationLanguageCodeMap).common
 }
 
 export const getImageFlagAsync = async (countryCode: CountryCode = 'FR') => {
