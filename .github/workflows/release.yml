@@ -37,9 +37,6 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      - name: Deploy docs
-        run: npm run deploy
-
       - name: Create a .tgz package
         run: |
           # npm pack --pack-destination ./lib
