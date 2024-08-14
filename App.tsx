@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   Button,
   PixelRatio,
@@ -7,48 +7,47 @@ import {
   StyleSheet,
   Switch,
   Text,
-  View,
-} from 'react-native'
-import { Row } from './src/Row'
-import { Country, CountryCode, CountryModalProvider, DARK_THEME } from './src'
-import { CountryPicker } from './src/CountryPicker'
+} from 'react-native';
+import { Row } from './src/Row';
+import { Country, CountryCode, CountryModalProvider } from './src';
+import CountryPicker from './src/CountryPicker';
 
 interface OptionProps {
-  title: string
-  value: boolean
-  onValueChange(value: boolean): void
+  title: string;
+  value: boolean;
+  onValueChange(value: boolean): void;
 }
 const Option = ({ value, onValueChange, title }: OptionProps) => (
   <Row fullWidth>
     <Text style={styles.instructions}>{title}</Text>
     <Switch {...{ value, onValueChange }} />
   </Row>
-)
+);
 export default function App() {
-  const [countryCode, setCountryCode] = useState<CountryCode>('US')
-  const [country, setCountry] = useState<Country>()
+  const [countryCode, setCountryCode] = useState<CountryCode>('US');
+  const [country, setCountry] = useState<Country>();
   const [withCountryNameButton, setWithCountryNameButton] =
-    useState<boolean>(false)
-  const [withCurrencyButton, setWithCurrencyButton] = useState<boolean>(false)
-  const [withFlagButton, setWithFlagButton] = useState<boolean>(true)
+    useState<boolean>(false);
+  const [withCurrencyButton, setWithCurrencyButton] = useState<boolean>(false);
+  const [withFlagButton, setWithFlagButton] = useState<boolean>(true);
   const [withCallingCodeButton, setWithCallingCodeButton] =
-    useState<boolean>(false)
-  const [withFlag, setWithFlag] = useState<boolean>(true)
-  const [withEmoji, setWithEmoji] = useState<boolean>(true)
-  const [withFilter, setWithFilter] = useState<boolean>(true)
-  const [withAlphaFilter, setWithAlphaFilter] = useState<boolean>(false)
-  const [withCallingCode, setWithCallingCode] = useState<boolean>(true)
-  const [withCurrency, setWithCurrency] = useState<boolean>(false)
-  const [withModal, setWithModal] = useState<boolean>(true)
-  const [visible, setVisible] = useState<boolean>(false)
-  const [dark, setDark] = useState<boolean>(false)
-  const [allowFontScaling, setFontScaling] = useState<boolean>(true)
-  const [disableNativeModal, setDisableNativeModal] = useState<boolean>(false)
+    useState<boolean>(false);
+  const [withFlag, setWithFlag] = useState<boolean>(true);
+  const [withEmoji, setWithEmoji] = useState<boolean>(true);
+  const [withFilter, setWithFilter] = useState<boolean>(true);
+  const [withAlphaFilter, setWithAlphaFilter] = useState<boolean>(false);
+  const [withCallingCode, setWithCallingCode] = useState<boolean>(true);
+  const [withCurrency, setWithCurrency] = useState<boolean>(false);
+  const [withModal, setWithModal] = useState<boolean>(true);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [dark, setDark] = useState<boolean>(false);
+  const [allowFontScaling, setFontScaling] = useState<boolean>(true);
+  const [disableNativeModal, setDisableNativeModal] = useState<boolean>(false);
   const onSelect = (country: Country) => {
-    setCountryCode(country.cca2)
-    setCountry(country)
-  }
-  const switchVisible = () => setVisible(!visible)
+    setCountryCode(country.cca2);
+    setCountry(country);
+  };
+  const switchVisible = () => setVisible(!visible);
   return (
     <SafeAreaView style={{ flex: 1, borderWidth: 3, borderColor: 'green' }}>
       <CountryModalProvider>
@@ -58,72 +57,72 @@ export default function App() {
         >
           <Text style={styles.welcome}>Welcome to Country Picker !</Text>
           <Option
-            title='With country name on button'
+            title="With country name on button"
             value={withCountryNameButton}
             onValueChange={setWithCountryNameButton}
           />
           <Option
-            title='With currency on button'
+            title="With currency on button"
             value={withCurrencyButton}
             onValueChange={setWithCurrencyButton}
           />
           <Option
-            title='With calling code on button'
+            title="With calling code on button"
             value={withCallingCodeButton}
             onValueChange={setWithCallingCodeButton}
           />
           <Option
-            title='With flag'
+            title="With flag"
             value={withFlag}
             onValueChange={setWithFlag}
           />
           <Option
-            title='With font scaling'
+            title="With font scaling"
             value={allowFontScaling}
             onValueChange={setFontScaling}
           />
           <Option
-            title='With emoji'
+            title="With emoji"
             value={withEmoji}
             onValueChange={setWithEmoji}
           />
           <Option
-            title='With filter'
+            title="With filter"
             value={withFilter}
             onValueChange={setWithFilter}
           />
           <Option
-            title='With calling code'
+            title="With calling code"
             value={withCallingCode}
             onValueChange={setWithCallingCode}
           />
           <Option
-            title='With currency'
+            title="With currency"
             value={withCurrency}
             onValueChange={setWithCurrency}
           />
           <Option
-            title='With alpha filter code'
+            title="With alpha filter code"
             value={withAlphaFilter}
             onValueChange={setWithAlphaFilter}
           />
           <Option
-            title='Without native modal'
+            title="Without native modal"
             value={disableNativeModal}
             onValueChange={setDisableNativeModal}
           />
           <Option
-            title='With modal'
+            title="With modal"
             value={withModal}
             onValueChange={setWithModal}
           />
           <Option
-            title='With dark theme'
+            title="With dark theme"
             value={dark}
             onValueChange={setDark}
           />
           <Option
-            title='With flag button'
+            title="With flag button"
             value={withFlagButton}
             onValueChange={setWithFlagButton}
           />
@@ -165,7 +164,7 @@ export default function App() {
         </ScrollView>
       </CountryModalProvider>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -194,4 +193,4 @@ const styles = StyleSheet.create({
     borderWidth: 1 / PixelRatio.get(),
     color: '#777',
   },
-})
+});

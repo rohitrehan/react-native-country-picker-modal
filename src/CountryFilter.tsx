@@ -1,15 +1,14 @@
-import React from "react";
-import { TextInput, StyleSheet, TextInputProps, Platform } from "react-native";
-import { useTheme } from "./CountryTheme";
-
+import React from 'react';
+import { TextInput, StyleSheet, TextInputProps, Platform } from 'react-native';
+import useTheme from './CountryTheme';
 const styles = StyleSheet.create({
   input: {
     height: 48,
-    width: "70%",
+    width: '70%',
     ...Platform.select({
       web: {
         outlineWidth: 0,
-        outlineColor: "transparent",
+        outlineColor: 'transparent',
         outlineOffset: 0,
       },
     }),
@@ -18,10 +17,7 @@ const styles = StyleSheet.create({
 
 export type CountryFilterProps = TextInputProps;
 
-export const CountryFilter = ({
-  placeholder,
-  ...props
-}: CountryFilterProps) => {
+const CountryFilter = ({ placeholder, ...props }: CountryFilterProps) => {
   const {
     filterPlaceholderTextColor,
     fontFamily,
@@ -37,8 +33,10 @@ export const CountryFilter = ({
         styles.input,
         { fontFamily, fontSize, color: onBackgroundTextColor },
       ]}
-      placeholder={placeholder || "Enter country name"}
+      placeholder={placeholder || 'Enter country name'}
       {...props}
     />
   );
 };
+
+export default CountryFilter;

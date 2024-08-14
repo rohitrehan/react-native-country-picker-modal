@@ -1,15 +1,15 @@
-import * as React from 'react'
-import { ViewProps, StyleSheet, View } from 'react-native'
+import * as React from 'react';
+import { ViewProps, StyleSheet, View } from 'react-native';
 
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    alignItems: 'center'
-  }
-})
+    alignItems: 'center',
+  },
+});
 
 export const Row = (
-  props: ViewProps & { children?: React.ReactNode; fullWidth?: boolean }
+  props: ViewProps & { children?: React.ReactNode; fullWidth?: boolean },
 ) => (
   <View
     {...props}
@@ -20,8 +20,8 @@ export const Row = (
         width: '100%',
         justifyContent: 'space-between',
         padding: 10,
-        paddingHorizontal: 50
-      }
+        paddingHorizontal: 50,
+      },
     ]}
   />
-)
+);

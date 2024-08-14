@@ -1,8 +1,8 @@
-import React, { memo } from 'react'
-import { Emoji } from './Emoji'
-import { CountryCode } from './types'
-import { useContext } from './CountryContext'
-import { useAsync } from 'react-async-hook'
+import React, { memo } from 'react';
+import Emoji from './Emoji';
+import { CountryCode } from './types';
+import { useContext } from './CountryContext';
+import { useAsync } from 'react-async-hook';
 import {
   Image,
   StyleSheet,
@@ -10,7 +10,7 @@ import {
   Text,
   View,
   ActivityIndicator,
-} from 'react-native'
+} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,20 +33,20 @@ const styles = StyleSheet.create({
     borderWidth: 1 / PixelRatio.get(),
     opacity: 0.8,
   },
-})
+});
 
 interface FlagType {
-  countryCode: CountryCode
-  withEmoji?: boolean
-  withFlagButton?: boolean
-  flagSize: number
+  countryCode: CountryCode;
+  withEmoji?: boolean;
+  withFlagButton?: boolean;
+  flagSize: number;
 }
 
 const ImageFlag = memo(({ countryCode, flagSize }: FlagType) => {
-  const { getImageFlagAsync } = useContext()
-  const asyncResult = useAsync(getImageFlagAsync, [countryCode])
+  const { getImageFlagAsync } = useContext();
+  const asyncResult = useAsync(getImageFlagAsync, [countryCode]);
   if (asyncResult.loading) {
-    return <ActivityIndicator size={'small'} />
+    return <ActivityIndicator size={'small'} />;
   }
   return (
     <Image
@@ -57,15 +57,15 @@ const ImageFlag = memo(({ countryCode, flagSize }: FlagType) => {
       ]}
       source={{ uri: asyncResult.result }}
     />
-  )
-})
+  );
+});
 
 const EmojiFlag = memo(({ countryCode, flagSize }: FlagType) => {
-  const { getEmojiFlagAsync } = useContext()
-  const asyncResult = useAsync(getEmojiFlagAsync, [countryCode])
+  const { getEmojiFlagAsync } = useContext();
+  const asyncResult = useAsync(getEmojiFlagAsync, [countryCode]);
 
   if (asyncResult.loading) {
-    return <ActivityIndicator size={'small'} />
+    return <ActivityIndicator size={'small'} />;
   }
   return (
     <Text
@@ -74,10 +74,10 @@ const EmojiFlag = memo(({ countryCode, flagSize }: FlagType) => {
     >
       <Emoji {...{ name: asyncResult.result! }} />
     </Text>
-  )
-})
+  );
+});
 
-export const Flag = ({
+const Flag = ({
   countryCode,
   withEmoji,
   withFlagButton,
@@ -91,4 +91,6 @@ export const Flag = ({
         <ImageFlag {...{ countryCode, flagSize }} />
       )}
     </View>
-  ) : null
+  ) : null;
+
+export default Flag;

@@ -1,6 +1,6 @@
 declare module 'modal-react-native-web' {
-  const Modal: typeof import('react-native').Modal
-  export = Modal
+  const Modal: typeof import('react-native').Modal;
+  export = Modal;
 }
 
-declare module '*.png'
+declare module '*.png';

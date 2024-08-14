@@ -1,17 +1,25 @@
-import React, { ReactNode } from "react";
-import { FlagButtonProps } from "./FlagButton";
+import CountryModal from './CountryModal';
+import { DARK_THEME } from './CountryTheme';
+import CountryFilter from './CountryFilter';
+import CountryList from './CountryList';
+import FlagButton from './FlagButton';
+import Flag from './Flag';
+import HeaderModal from './HeaderModal';
+import CountryModalProvider from './CountryModalProvider';
+import React, { ReactNode } from 'react';
+import { FlagButtonProps } from './FlagButton';
 import {
   TranslationLanguageCode,
   CountryCode,
   Country,
   Region,
   Subregion,
-} from "./types";
-import { CountryProvider, DEFAULT_COUNTRY_CONTEXT } from "./CountryContext";
-import { ThemeProvider, DEFAULT_THEME, Theme } from "./CountryTheme";
-import { CountryFilterProps } from "./CountryFilter";
-import { StyleProp, ViewStyle, ModalProps, FlatListProps } from "react-native";
-import { CountryPicker } from "./CountryPicker";
+} from './types';
+import CountryContext, { DEFAULT_COUNTRY_CONTEXT } from './CountryContext';
+import { ThemeProvider, DEFAULT_THEME, Theme } from './CountryTheme';
+import { CountryFilterProps } from './CountryFilter';
+import { StyleProp, ViewStyle, ModalProps, FlatListProps } from 'react-native';
+import CountryPicker from './CountryPicker';
 
 interface Props {
   allowFontScaling?: boolean;
@@ -52,9 +60,11 @@ interface Props {
 const Main = ({ theme, translation, ...props }: Props) => {
   return (
     <ThemeProvider theme={{ ...DEFAULT_THEME, ...theme }}>
-      <CountryProvider value={{ ...DEFAULT_COUNTRY_CONTEXT, translation }}>
+      <CountryContext.Provider
+        value={{ ...DEFAULT_COUNTRY_CONTEXT, translation }}
+      >
         <CountryPicker {...props} />
-      </CountryProvider>
+      </CountryContext.Provider>
     </ThemeProvider>
   );
 };
@@ -63,13 +73,18 @@ export default Main;
 export {
   getCountriesAsync as getAllCountries,
   getCountryCallingCodeAsync as getCallingCode,
-} from "./CountryService";
-export { CountryModal } from "./CountryModal";
-export { DARK_THEME, DEFAULT_THEME } from "./CountryTheme";
-export { CountryFilter } from "./CountryFilter";
-export { CountryList } from "./CountryList";
-export { FlagButton } from "./FlagButton";
-export { Flag } from "./Flag";
-export { HeaderModal } from "./HeaderModal";
-export { CountryModalProvider } from "./CountryModalProvider";
-export * from "./types";
+} from './CountryService';
+
+export * from './types';
+export {
+  CountryFilter,
+  CountryList,
+  FlagButton,
+  Flag,
+  CountryModal,
+  HeaderModal,
+  CountryModalProvider,
+  DARK_THEME,
+  DEFAULT_THEME,
+  CountryPicker,
+};

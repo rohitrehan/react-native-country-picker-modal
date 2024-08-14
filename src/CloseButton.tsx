@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -10,10 +10,10 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
-} from 'react-native'
-import { useTheme } from './CountryTheme'
-import closeImage from '../assets/images/close.android.png'
-import closeImageIOS from '../assets/images/close.ios.png'
+} from 'react-native';
+import useTheme from './CountryTheme';
+import closeImage from '../assets/images/close.android.png';
+import closeImageIOS from '../assets/images/close.ios.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,17 +27,17 @@ const styles = StyleSheet.create({
     width: 25,
     resizeMode: 'contain',
   },
-})
+});
 
 interface CloseButtonProps {
-  style?: StyleProp<ViewStyle>
-  imageStyle?: StyleProp<ImageStyle>
-  image?: ImageSourcePropType
-  onPress?(): void
+  style?: StyleProp<ViewStyle>;
+  imageStyle?: StyleProp<ImageStyle>;
+  image?: ImageSourcePropType;
+  onPress?(): void;
 }
 
 const CloseButtonAndroid: React.FC<CloseButtonProps> = (props) => {
-  const { onBackgroundTextColor } = useTheme()
+  const { onBackgroundTextColor } = useTheme();
   // const [assets, error] = useAssets([
   //   // eslint-disable-next-line @typescript-eslint/no-require-imports
   //   require('../assets/images/close.android.png'),
@@ -68,13 +68,13 @@ const CloseButtonAndroid: React.FC<CloseButtonProps> = (props) => {
         </View>
       </TouchableNativeFeedback>
     </View>
-  )
+  );
   // )
-}
+};
 
 const CloseButtonIOS: React.FC<CloseButtonProps> = (props) => {
-  const { onBackgroundTextColor } = useTheme()
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { onBackgroundTextColor } = useTheme();
+  // // eslint-disable-next-line @typescript-eslint/no-require-imports
   // const [assets, error] = useAssets([require('../assets/images/close.ios.png')])
   // const defaultImage: ImageSourcePropType | undefined = assets
   //   ? { uri: assets[0].uri }
@@ -94,13 +94,13 @@ const CloseButtonIOS: React.FC<CloseButtonProps> = (props) => {
         />
       </TouchableOpacity>
     </View>
-  )
+  );
   // )
-}
+};
 
 export default Platform.select({
   ios: CloseButtonIOS,
   android: CloseButtonAndroid,
   web: CloseButtonIOS,
   default: CloseButtonIOS,
-})
+});

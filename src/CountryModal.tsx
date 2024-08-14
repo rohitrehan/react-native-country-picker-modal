@@ -1,9 +1,9 @@
-import * as React from "react";
-import { ModalProps, SafeAreaView, StyleSheet, Platform } from "react-native";
-import { AnimatedModal } from "./AnimatedModal";
-import { Modal } from "./Modal";
-import { useTheme } from "./CountryTheme";
-import { CountryModalContext } from "./CountryModalProvider";
+import * as React from 'react';
+import { ModalProps, SafeAreaView, StyleSheet, Platform } from 'react-native';
+import AnimatedModal from './AnimatedModal';
+import { Modal } from './Modal';
+import useTheme from './CountryTheme';
+import { CountryModalContext } from './CountryModalProvider';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const CountryModal = ({
+const CountryModal = ({
   children,
   withModal,
   disableNativeModal,
@@ -23,18 +23,21 @@ export const CountryModal = ({
 }) => {
   const { backgroundColor } = useTheme();
   const { teleport } = React.useContext(CountryModalContext);
-  const content = (
-    <SafeAreaView style={[styles.container, { backgroundColor }]}>
-      {children}
-    </SafeAreaView>
+  const content = React.useMemo(
+    () => (
+      <SafeAreaView style={[styles.container, { backgroundColor }]}>
+        {children}
+      </SafeAreaView>
+    ),
+    [backgroundColor, children],
   );
   React.useEffect(() => {
     if (disableNativeModal) {
       teleport!(<AnimatedModal {...props}>{content}</AnimatedModal>);
     }
-  }, [disableNativeModal]);
+  }, [disableNativeModal, content, props, teleport]);
   if (withModal) {
-    if (Platform.OS === "web") {
+    if (Platform.OS === 'web') {
       return <Modal {...props}>{content}</Modal>;
     }
     if (disableNativeModal) {
@@ -44,3 +47,5 @@ export const CountryModal = ({
   }
   return content;
 };
+
+export default CountryModal;

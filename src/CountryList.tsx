@@ -1,4 +1,11 @@
-import React, { useRef, memo, useState, useEffect } from 'react'
+import React, {
+  useRef,
+  memo,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from 'react';
 import {
   StyleSheet,
   View,
@@ -9,14 +16,14 @@ import {
   PixelRatio,
   FlatListProps,
   Dimensions,
-} from 'react-native'
-import { useTheme } from './CountryTheme'
-import { Country, Omit } from './types'
-import { Flag } from './Flag'
-import { useContext } from './CountryContext'
-import { CountryText } from './CountryText'
+} from 'react-native';
+import useTheme from './CountryTheme';
+import { Country, Omit } from './types';
+import Flag from './Flag';
+import { useContext } from './CountryContext';
+import { CountryText } from './CountryText';
 
-const borderBottomWidth = 2 / PixelRatio.get()
+const borderBottomWidth = 2 / PixelRatio.get();
 
 const styles = StyleSheet.create({
   container: {
@@ -56,14 +63,14 @@ const styles = StyleSheet.create({
     borderBottomWidth,
     width: '100%',
   },
-})
+});
 
 interface LetterProps {
-  letter: string
-  scrollTo(letter: string): void
+  letter: string;
+  scrollTo(letter: string): void;
 }
 const Letter = ({ letter, scrollTo }: LetterProps) => {
-  const { fontSize, activeOpacity } = useTheme()
+  const { fontSize, activeOpacity } = useTheme();
 
   return (
     <TouchableOpacity
@@ -78,20 +85,20 @@ const Letter = ({ letter, scrollTo }: LetterProps) => {
         </CountryText>
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 interface CountryItemProps {
-  country: Country
-  withFlag?: boolean
-  withFlagButton?: boolean
-  withEmoji?: boolean
-  withCallingCode?: boolean
-  withCurrency?: boolean
-  onSelect(country: Country): void
+  country: Country;
+  withFlag?: boolean;
+  withFlagButton?: boolean;
+  withEmoji?: boolean;
+  withCallingCode?: boolean;
+  withCurrency?: boolean;
+  onSelect(country: Country): void;
 }
 const CountryItem = (props: CountryItemProps) => {
-  const { activeOpacity, itemHeight, flagSize } = useTheme()
+  const { activeOpacity, itemHeight, flagSize } = useTheme();
   const {
     country,
     onSelect,
@@ -100,20 +107,20 @@ const CountryItem = (props: CountryItemProps) => {
     withEmoji,
     withCallingCode,
     withCurrency,
-  } = props
-  const extraContent: string[] = []
+  } = props;
+  const extraContent: string[] = [];
   if (
     withCallingCode &&
     country.callingCode &&
     country.callingCode.length > 0
   ) {
-    extraContent.push(`+${country.callingCode.join('|')}`)
+    extraContent.push(`+${country.callingCode.join('|')}`);
   }
   if (withCurrency && country.currency && country.currency.length > 0) {
-    extraContent.push(country.currency.join('|'))
+    extraContent.push(country.currency.join('|'));
   }
   const countryName =
-    typeof country.name === 'string' ? country.name : country.name.common
+    typeof country.name === 'string' ? country.name : country.name.common;
 
   return (
     <TouchableOpacity
@@ -134,47 +141,47 @@ const CountryItem = (props: CountryItemProps) => {
           />
         )}
         <View style={styles.itemCountryName}>
-          <CountryText numberOfLines={2} ellipsizeMode='tail'>
+          <CountryText numberOfLines={2} ellipsizeMode="tail">
             {countryName}
             {extraContent.length > 0 && ` (${extraContent.join(', ')})`}
           </CountryText>
         </View>
       </View>
     </TouchableOpacity>
-  )
-}
-const MemoCountryItem = memo<CountryItemProps>(CountryItem)
+  );
+};
+const MemoCountryItem = memo<CountryItemProps>(CountryItem);
 
 const renderItem =
   (props: Omit<CountryItemProps, 'country'>) =>
   ({ item: country }: ListRenderItemInfo<Country>) => (
     <MemoCountryItem {...{ country, ...props }} />
-  )
+  );
 
 interface CountryListProps {
-  data: Country[]
-  filter?: string
-  filterFocus?: boolean
-  withFlag?: boolean
-  withFlagButton?: boolean
-  withEmoji?: boolean
-  withAlphaFilter?: boolean
-  withCallingCode?: boolean
-  withCurrency?: boolean
-  flatListProps?: FlatListProps<Country>
-  onSelect(country: Country): void
+  data: Country[];
+  filter?: string;
+  filterFocus?: boolean;
+  withFlag?: boolean;
+  withFlagButton?: boolean;
+  withEmoji?: boolean;
+  withAlphaFilter?: boolean;
+  withCallingCode?: boolean;
+  withCurrency?: boolean;
+  flatListProps?: FlatListProps<Country>;
+  onSelect(country: Country): void;
 }
 
 const ItemSeparatorComponent = () => {
-  const { primaryColorVariant } = useTheme()
+  const { primaryColorVariant } = useTheme();
   return (
     <View style={[styles.sep, { borderBottomColor: primaryColorVariant }]} />
-  )
-}
+  );
+};
 
-const { height } = Dimensions.get('window')
+const { height } = Dimensions.get('window');
 
-export const CountryList = (props: CountryListProps) => {
+const CountryList = (props: CountryListProps) => {
   const {
     data,
     withAlphaFilter,
@@ -187,43 +194,50 @@ export const CountryList = (props: CountryListProps) => {
     filter,
     flatListProps,
     filterFocus,
-  } = props
+  } = props;
 
-  const flatListRef = useRef<FlatList<Country>>(null)
-  const [letter, setLetter] = useState<string>('')
-  const { itemHeight, backgroundColor } = useTheme()
-  const indexLetter = data
-    .map((country: Country) => (country.name as string).substr(0, 1))
-    .join('')
+  const flatListRef = useRef<FlatList<Country>>(null);
+  const [letter, setLetter] = useState<string>('');
+  const { itemHeight, backgroundColor } = useTheme();
+  const indexLetter = useMemo(
+    () =>
+      data
+        .map((country: Country) => (country.name as string).substr(0, 1))
+        .join(''),
+    [data],
+  );
 
-  const scrollTo = (letter: string, animated: boolean = true) => {
-    const index = indexLetter.indexOf(letter)
-    setLetter(letter)
-    if (flatListRef.current) {
-      flatListRef.current.scrollToIndex({ animated, index })
-    }
-  }
+  const scrollTo = useCallback(
+    (letter: string, animated: boolean = true) => {
+      const index = indexLetter.indexOf(letter);
+      setLetter(letter);
+      if (flatListRef.current) {
+        flatListRef.current.scrollToIndex({ animated, index });
+      }
+    },
+    [indexLetter, flatListRef],
+  );
   const onScrollToIndexFailed = () => {
     if (flatListRef.current) {
-      flatListRef.current.scrollToEnd()
-      scrollTo(letter)
+      flatListRef.current.scrollToEnd();
+      scrollTo(letter);
     }
-  }
-  const { search, getLetters } = useContext()
-  const letters = getLetters(data)
+  };
+  const { search, getLetters } = useContext();
+  const letters = getLetters(data);
   useEffect(() => {
     if (data && data.length > 0 && filterFocus && !filter) {
-      scrollTo(letters[0], false)
+      scrollTo(letters[0], false);
     }
-  }, [filterFocus])
+  }, [filterFocus, data, filter, letters, scrollTo]);
 
-  const initialNumToRender = Math.round(height / (itemHeight || 1))
+  const initialNumToRender = Math.round(height / (itemHeight || 1));
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <FlatList
         ref={flatListRef}
-        testID='list-countries'
-        keyboardShouldPersistTaps='handled'
+        testID="list-countries"
+        keyboardShouldPersistTaps="handled"
         automaticallyAdjustContentInsets={false}
         scrollEventThrottle={1}
         getItemLayout={(_data: any, index) => ({
@@ -252,7 +266,7 @@ export const CountryList = (props: CountryListProps) => {
         <ScrollView
           scrollEnabled={false}
           contentContainerStyle={styles.letters}
-          keyboardShouldPersistTaps='always'
+          keyboardShouldPersistTaps="always"
         >
           {letters.map((letter) => (
             <Letter key={letter} {...{ letter, scrollTo }} />
@@ -260,5 +274,7 @@ export const CountryList = (props: CountryListProps) => {
         </ScrollView>
       )}
     </View>
-  )
-}
+  );
+};
+
+export default CountryList;

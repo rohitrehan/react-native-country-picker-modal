@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,13 +6,13 @@ import {
   StyleProp,
   ViewStyle,
   ImageStyle,
-} from "react-native";
-import CloseButton from "./CloseButton";
+} from 'react-native';
+import CloseButton from './CloseButton';
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 
@@ -25,7 +25,7 @@ interface HeaderModalProps {
   onClose(): void;
   renderFilter(props: HeaderModalProps): ReactNode;
 }
-export const HeaderModal = (props: HeaderModalProps) => {
+const HeaderModal = (props: HeaderModalProps) => {
   const {
     withFilter,
     withCloseButton,
@@ -49,3 +49,5 @@ export const HeaderModal = (props: HeaderModalProps) => {
     </View>
   );
 };
+
+export default HeaderModal;
